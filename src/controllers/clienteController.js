@@ -3,7 +3,7 @@ import * as clienteService from '../services/clienteService.js'
 export async function cadastrar_usuario
 (req, res) {
     try {
-        const cliente = await clienteService.criar_clientes(req.body)
+        const cliente = await clienteService.cadastrar_usuario(req.body)
         return res.status(201).json(cliente)
     } catch(err) {
         return res.status(400).json({ erro: err.message })
@@ -12,7 +12,7 @@ export async function cadastrar_usuario
 
 export async function listar_usuarios(req, res) {
     try{
-        const clientes = await clienteService.listar_clientes()
+        const clientes = await clienteService.listar_usuarios()
         return res.status(200).json(clientes)
     } catch (err) {
         return res.status(500).json({ erro: err.message})
@@ -22,7 +22,7 @@ export async function listar_usuarios(req, res) {
 export async function buscar_usuario(req, res) {
     try {
         const id = Number(req.params.id)
-        const cliente = await clienteService.buscar_clientes(id)
+        const cliente = await clienteService.buscar_usuario(id)
 
         if (!cliente) {
             return res.status(404).json({ erro: 'Cliente não encontrado'})
@@ -38,7 +38,7 @@ export async function buscar_usuario(req, res) {
 export async function deletar_usuario(req, res) {
     try {
         const id = Number(req.params.id)
-        const cliente = await clienteService.deletar_dados(id)
+        const cliente = await clienteService.deletar_usuario(id)
 
         if (!cliente){
             return res.status(404).json({ erro: 'Cliente não encontrado'})
