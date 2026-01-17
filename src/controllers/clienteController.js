@@ -38,7 +38,7 @@ export async function buscar_usuario(req, res) {
 export async function deletar_usuario(req, res) {
     try {
         const id = Number(req.params.id)
-        const cliente = await clienteService.deletar_cliente(id)
+        const cliente = await clienteService.deletar_dados(id)
 
         if (!cliente){
             return res.status(404).json({ erro: 'Cliente não encontrado'})
@@ -50,17 +50,27 @@ export async function deletar_usuario(req, res) {
     }
 }
 
-export async function atualizar_cpf(req, res) {
-    try {
-        const nome = String(req.params.nome)
-        const cliente = await clienteService.atualizar_dados(nome)
+export async function atualizar_name(req, res) {
+  try {
+    const id = Number(req.params.id)
+    const nomeUsers = String(req.body.nomeUsers ?? '').trim()
 
-        if (!cliente){
-            return res.status(404).json({ erro: 'Cliente não encontrado'})
-        }
-
-        return res.status(200).json(cliente)
-    } catch(err) {
-        return res.status(500).json({ erro: err.message})
+    if (!Number.isInteger(id) || id <= 0) {
+      return res.status(400).json({ erro: 'ID inválido' })
     }
+
+    if (!nomeUsers) {
+      return res.status(400).json({ erro: 'nomeUsers é obrigatório' })
+    }
+
+    const cliente = await clienteService.atualizar_name(id, nomeUsers)
+
+    if (!cliente) {
+      return res.status(404).json({ erro: 'Cliente não encontrado' })
+    }
+
+    return res.status(200).json(cliente)
+  } catch (err) {
+    return res.status(500).json({ erro: err.message })
+  }
 }

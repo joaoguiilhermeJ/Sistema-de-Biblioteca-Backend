@@ -7,7 +7,7 @@ export async function criar_clientes(dados) {
 
 export async function listar_clientes() {
     const result = await clienteRepository.listar_Todosclientes()
-    return result.rows[0]
+    return result.rows
 }
 
 export async function buscar_clientes(id) {
@@ -15,7 +15,13 @@ export async function buscar_clientes(id) {
     return  result.rows[0] || null
 }
 
-export async function deletar_cliente(id) {
-    const result = await clienteRepository.deletar_usuario()
+
+export async function deletar_dados(id) {
+    const result = await clienteRepository.deletar_usuario(id)
     return result.rows[0] 
+}
+
+export async function atualizar_name(id, nameUsers) {
+    const result = await clienteRepository.update_name(id)
+    return result.rows[0]
 }
