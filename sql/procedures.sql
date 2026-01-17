@@ -1,3 +1,4 @@
+
 CREATE OR REPLACE PROCEDURE emprestar_livro(p_idUser INT, p_idBook INT)
 LANGUAGE plpgsql
 AS $$

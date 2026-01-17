@@ -1,8 +1,5 @@
-database name = biblioteca
-
 -- USERS
-CREAT
-E TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users (
   idUsers SERIAL PRIMARY KEY,
   nomeUsers TEXT NOT NULL,
   cpf VARCHAR(11) NOT NULL,
@@ -13,6 +10,7 @@ E TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS livros (
   idBook SERIAL PRIMARY KEY,
   titulo TEXT NOT NULL,
+  autor TEXT NOT NULL,
   quantidade INT NOT NULL DEFAULT 0
 );
 
@@ -40,3 +38,7 @@ CREATE TABLE IF NOT EXISTS avisos (
   mensagem TEXT NOT NULL,
   criadoEm TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+ALTER TABLE livros
+ADD COLUMN autor TEXT NOT NULL;
+

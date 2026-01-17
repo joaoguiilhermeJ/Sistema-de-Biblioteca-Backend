@@ -3,7 +3,7 @@ import pool from '../config/database.js'
 export async function cadastrar_usuario(dados) {
     return pool.query(
         `INSERT INTO users (nomeUsers, cpf) VALUES ($1, $2) RETURNING *`,
-        [dados.nome, dados.cpf]
+        [dados.nomeUsers, dados.cpf]
     );
 }
 
