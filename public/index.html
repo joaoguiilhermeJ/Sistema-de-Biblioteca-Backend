@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Biblioteca</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1> Sistema de Biblioteca</h1>
+            <nav class="tabs">
+                <button class="tab-btn active" data-tab="clientes">Clientes</button>
+                <button class="tab-btn" data-tab="livros">Livros</button>
+                <button class="tab-btn" data-tab="emprestimos">Empréstimos</button>
+            </nav>
+        </header>
+
+        <!-- CLIENTES -->
+        <section id="clientes" class="tab-content active">
+            <h2>Gestão de Clientes</h2>
+            
+            <div class="form-section">
+                <h3>Cadastrar Novo Cliente</h3>
+                <form id="formCliente">
+                    <input type="text" id="clienteNome" placeholder="Nome do cliente" required>
+                    <input type="text" id="clienteEmail" placeholder="CPF" required>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <div class="list-section">
+                <h3>Lista de Clientes</h3>
+                <div id="clientesList" class="lista"></div>
+            </div>
+        </section>
+
+        <!-- LIVROS -->
+        <section id="livros" class="tab-content">
+            <h2>Gestão de Livros</h2>
+            
+            <div class="form-section">
+                <h3>Cadastrar Novo Livro</h3>
+                <form id="formLivro">
+                    <input type="text" id="livroTitulo" placeholder="Título" required>
+                    <input type="text" id="livroAutor" placeholder="Autor" required>
+                    <input type="number" id="livroQuantidade" placeholder="Quantidade" required min="1">
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <div class="list-section">
+                <h3>Lista de Livros</h3>
+                <div id="livrosList" class="lista"></div>
+            </div>
+        </section>
+
+        <!-- EMPRÉSTIMOS -->
+        <section id="emprestimos" class="tab-content">
+            <h2>Gestão de Empréstimos</h2>
+            
+            <div class="form-section">
+                <h3>Novo Empréstimo</h3>
+                <form id="formEmprestimo">
+                    <input type="number" id="emprestimoClienteId" placeholder="ID do Cliente" required>
+                    <input type="number" id="emprestimoLivroId" placeholder="ID do Livro" required>
+                    <button type="submit">Emprestar</button>
+                </form>
+            </div>
+
+            <div class="form-section">
+                <h3>Registrar Devolução</h3>
+                <form id="formDevolucao">
+                    <input type="number" id="devolucaoClienteId" placeholder="ID do Cliente" required>
+                    <input type="number" id="devolucaoLivroId" placeholder="ID do Livro" required>
+                    <button type="submit">Devolver</button>
+                </form>
+            </div>
+
+            <div class="list-section">
+                <h3>Empréstimos Abertos</h3>
+                <div id="emprestimosList" class="lista"></div>
+            </div>
+        </section>
+
+        <footer>
+            <p id="mensagem" class="mensagem"></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
