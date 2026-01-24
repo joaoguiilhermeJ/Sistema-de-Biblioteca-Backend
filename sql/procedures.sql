@@ -46,38 +46,34 @@ END;
 $$;
 
 
-CREATE OR REPLACE PROCEDURE devolver_livro(p_idUser INT, p_idBook INT)
+CREATE OR REPLACE PROCEDURE devolver_livro(
+    IN p_idUser INT,
+    IN p_idBook INT
+)
 LANGUAGE plpgsql
 AS $$
-DECLARE
-  emprestimo_data TIMESTAMP;
 BEGIN
-  SELECT dataEmprestimo
-  INTO emprestimo_data
-  FROM emprestimos
-  WHERE idUser = p_idUser
-    AND idBook = p_idBook
-    AND dataDevolucao IS NULL
-  ORDER BY dataEmprestimo DESC
-  LIMIT 1
-  FOR UPDATE;
+ 
+    UPDATE emprestimos
+       SET dataDevolucao = CURRENT_TIMESTAMP
+     WHERE idUser = p_idUser
+       AND idBook = p_idBook
+       AND dataDevolucao IS NULL;
 
-  IF emprestimo_data IS NULL THEN
-    RAISE EXCEPTION 'Não existe empréstimo aberto para este user/livro (user=% livro=%)', p_idUser, p_idBook;
-  END IF;
 
-  UPDATE emprestimos
-  SET dataDevolucao = NOW()
-  WHERE idUser = p_idUser
-    AND idBook = p_idBook
-    AND dataEmprestimo = emprestimo_data;
+    UPDATE livros
+       SET quantidade = quantidade + 1
+     WHERE idBook = p_idBook;
 
-  UPDATE users
-  SET totalLivrosEmMao = GREATEST(totalLivrosEmMao - 1, 0)
-  WHERE idUsers = p_idUser;
 
-  UPDATE livros
-  SET quantidade = quantidade + 1
-  WHERE idBook = p_idBook;
+    UPDATE users
+       SET totalLivrosEmMao = GREATEST(totalLivrosEmMao - 1, 0)
+     WHERE idUsers = p_idUser;
+
+
+    DELETE FROM emprestimos
+     WHERE idUser = p_idUser
+       AND idBook = p_idBook
+       AND dataDevolucao IS NOT NULL;
 END;
 $$;
