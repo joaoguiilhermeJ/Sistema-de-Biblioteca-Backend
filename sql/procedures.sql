@@ -53,7 +53,7 @@ CREATE OR REPLACE PROCEDURE devolver_livro(
 LANGUAGE plpgsql
 AS $$
 BEGIN
- 
+
     UPDATE emprestimos
        SET dataDevolucao = CURRENT_TIMESTAMP
      WHERE idUser = p_idUser
@@ -65,10 +65,13 @@ BEGIN
        SET quantidade = quantidade + 1
      WHERE idBook = p_idBook;
 
-
+ 
     UPDATE users
        SET totalLivrosEmMao = GREATEST(totalLivrosEmMao - 1, 0)
      WHERE idUsers = p_idUser;
+
+    INSERT INTO devolvidos (idUser, idBook, dataDevolucao)
+    VALUES (p_idUser, p_idBook, CURRENT_TIMESTAMP);
 
 
     DELETE FROM emprestimos
@@ -77,3 +80,4 @@ BEGIN
        AND dataDevolucao IS NOT NULL;
 END;
 $$;
+

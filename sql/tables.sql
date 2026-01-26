@@ -19,8 +19,14 @@ CREATE TABLE IF NOT EXISTS emprestimos (
   idUser INT NOT NULL REFERENCES users(idUsers),
   idBook INT NOT NULL REFERENCES livros(idBook),
   dataEmprestimo TIMESTAMP NOT NULL DEFAULT NOW(),
-  dataDevolucao TIMESTAMP NULL,
   PRIMARY KEY (idUser, idBook, dataEmprestimo)
+);
+
+CREATE TABLE devolvidos (
+  idDevolvidos SERIAL PRIMARY KEY,
+  idUser INT NOT NULL REFERENCES users(idUsers),
+  idBook INT NOT NULL REFERENCES livros(idBook),
+  dataDevolucao TIMESTAMP NULL
 );
 
 -- DEVEDORES
